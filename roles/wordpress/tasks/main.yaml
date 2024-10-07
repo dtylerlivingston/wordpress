@@ -41,3 +41,20 @@
   loop:
      - /var/www/wordpress-6.4.3.tar.gz
      - /var/www/wordpress
+     
+- name: Download Wordpress CLI
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: /var/www/
+  when: file_check.stat.exists == false
+
+- name: Move extracted files
+  ansible.builtin.copy:
+    src: /var/www/wp-cli.phar
+    dest: /usr/local/bin/wp
+    remote_src: true
+    owner: www-data
+    group: www-data
+    mode: '0755'
+  when: file_check.stat.exists == false
+  
