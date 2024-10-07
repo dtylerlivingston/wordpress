@@ -1,2 +1,3 @@
 [all]
 192.168.1.171 ansible_user=myaccount ansible_pass=mypassword
+
