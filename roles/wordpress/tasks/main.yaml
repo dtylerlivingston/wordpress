@@ -1,7 +1,7 @@
----
+
 - name: Create directory for site
   ansible.builtin.file:
-    path: /var/www/mydomain.com
+    path: "{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}"
     state: directory
     owner: www-data
     group: www-data
@@ -9,26 +9,26 @@
 
 - name: Check the file 
   ansible.builtin.stat:
-    path: /var/www/mydomain.com/wp-settings.php
+    path: "{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}/wp-settings.php"
   register: file_check
 
 - name: Download Wordpress 6.4.3
   ansible.builtin.get_url:
     url: https://wordpress.org/wordpress-6.4.3.tar.gz
-    dest: /var/www/
+    dest: "{{ WWW_BASE_PATH }}/" 
   when: file_check.stat.exists == false
 
 - name: Extract wordpress-6.4.3.tar.gz
   ansible.builtin.unarchive:
     src: /var/www/wordpress-6.4.3.tar.gz
-    dest: /var/www/
+    dest: "{{ WWW_BASE_PATH }}/" 
     remote_src: yes
   when: file_check.stat.exists == false
 
 - name: Move extracted files
   ansible.builtin.copy:
-    src: /var/www/wordpress/
-    dest: /var/www/mydomain.com/
+    src: "{{ WWW_BASE_PATH }}/wordpress/"
+    dest: "{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}/"
     remote_src: true
     owner: www-data
     group: www-data
@@ -57,11 +57,24 @@
     group: www-data
     mode: '0755'
   when: file_check.stat.exists == false
+
+- name: Check if wp-config.php exists 
+  stat:
+    path: /var/www/mydomain.com/wp-config.php 
+  register: result
+
+- name: Show result
+  debug:
+    msg: "wp-config.php does not exist!"
+  when: not result.stat.exists
   
 - name: Configure Wordpress Connection to DB
-  ansible.builtin.command:
-    cmd: wp config create --dbname=wordpress --dbuser=user --dbpass=mypassword
+  ansible.builtin.shell: 
+    cmd: wp config create --dbname=wordpress --dbuser=user --dbpass=mypassword --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}/' --allow-root 
+  when: not result.stat.exists
 
 - name: Configure Wordpress Installation
-  ansible.builtin.command:
-    cmd: wp core install --url=mydomain.com --title='My Domain' --admin_user=wpadmin --admin_password=mypassword --admin_email='thesodabar@gmail.com' --skip-email
+  ansible.builtin.shell:
+    cmd: wp core multisite-install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --url='{{ DOMAIN_NAME }}' --title='My Domain' --admin_user=wpadmin --admin_password=mypassword --admin_email='thesodabar@gmail.com' --skip-email --allow-root
+
+
