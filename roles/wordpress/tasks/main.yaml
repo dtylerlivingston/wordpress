@@ -75,6 +75,6 @@
 
 - name: Configure Wordpress Installation
   ansible.builtin.shell:
-    cmd: wp core multisite-install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --url='{{ DOMAIN_NAME }}' --title='My Domain' --admin_user=wpadmin --admin_password=mypassword --admin_email='thesodabar@gmail.com' --skip-email --allow-root
+    cmd: wp core multisite-install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --url='{{ DOMAIN_NAME }}' --title='My Domain' --admin_user=wpadmin --admin_password=mypassword --admin_email='thesodabar@gmail.com' --skip-email --subdomains --allow-root
 
 
