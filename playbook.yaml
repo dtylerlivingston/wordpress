@@ -1,4 +1,10 @@
----
+#- hosts: all
+#
+#  vars:
+#    WWW_BASE_PATH: "/var/www"
+#    DOMAIN_NAME: "mydomain.com"
+#    WORDPRESS_INSTALL_URL: "https://wordpress.org/wordpress-6.4.3.tar.gz"
+
 - name: Update and Upgrade the Server
   hosts: all
   become: yes
