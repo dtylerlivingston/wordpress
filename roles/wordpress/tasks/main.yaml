@@ -81,21 +81,15 @@
   ansible.builtin.shell:
     cmd: wp core update --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --allow-root
 
-- name: Wordpress Install Plugin Instagram Widge by WPZOOM
+- name: Wordpress Install Plugins
   ansible.builtin.shell:
-    cmd: wp plugin install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --activate  'https://downloads.wordpress.org/plugin/instagram-widget-by-wpzoom.2.1.19.zip' --allow-root
+    cmd: wp plugin install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --activate '{{ item }}' --allow-root
+  loop: "{{ plugins }}"
 
-- name:  Wordpress Install Plugin Visual Link Preview
+- name:  Wordpress Install Themes
   ansible.builtin.shell:
-    cmd: wp plugin install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --activate  'https://downloads.wordpress.org/plugin/visual-link-preview.zip' --allow-root
-    
-- name:  Wordpress Install Plugin Google Site Kit
-  ansible.builtin.shell:
-    cmd: wp plugin install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --activate  'https://downloads.wordpress.org/plugin/google-site-kit.1.137.0.zip' --allow-root
-
-- name:  Wordpress Install Theme Kadence
-  ansible.builtin.shell:
-    cmd: wp theme install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --activate 'https://downloads.wordpress.org/theme/kadence.1.2.9.zip' --allow-root 
+    cmd: wp theme install --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --activate '{{ item }}' --allow-root 
+  loop: "{{ themes }}"
 
 - name: Wordpress Plugin Update
   ansible.builtin.shell:
@@ -109,4 +103,4 @@
   ansible.builtin.shell:
     cmd: wp core update-db --network --path='{{ WWW_BASE_PATH }}/{{ DOMAIN_NAME }}' --allow-root
 
-    
+   

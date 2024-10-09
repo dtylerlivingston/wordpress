@@ -1,6 +1,12 @@
-  WWW_BASE_PATH: "/var/www"
-  DOMAIN_NAME: "mydomain.com"
-  WORDPRESS_INSTALL_URL: "https://wordpress.org/wordpress-6.4.3.tar.gz"
-  WORDPRESS_CLI_INSTALL_URL:
+WWW_BASE_PATH: '/var/www'
+DOMAIN_NAME: 'mydomain.com'
+WORDPRESS_INSTALL_URL: 'https://wordpress.org/wordpress-6.4.3.tar.gz'
 
+plugins:
+  - 'https://downloads.wordpress.org/plugin/instagram-widget-by-wpzoom.2.1.19.zip'
+  - 'https://downloads.wordpress.org/plugin/visual-link-preview.zip'
+  - 'https://downloads.wordpress.org/plugin/google-site-kit.1.137.0.zip' 
+
+themes: 
+  'https://downloads.wordpress.org/theme/kadence.1.2.9.zip'
 
