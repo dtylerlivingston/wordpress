@@ -26,7 +26,7 @@ msg_info "Setting up Database"
 DB_NAME=wordpress_db
 DB_USER=wordpress
 DB_PASS=$(openssl rand -base64 18 | tr -dc 'a-zA-Z0-9' | head -c13)
-DB_HOST=mysql.local
+DB_HOST=192.168.1.161
 $STD mariadb -u root -e "CREATE DATABASE $DB_NAME;"
 $STD mariadb -u root -e "CREATE USER '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
 $STD mariadb -u root -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'$DB_HOST'; FLUSH PRIVILEGES;"
