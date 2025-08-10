@@ -51,6 +51,7 @@ mv wp-config-sample.php wp-config.php
 sed -i -e "s|^define( 'DB_NAME', '.*' );|define( 'DB_NAME', '$DB_NAME' );|" \
   -e "s|^define( 'DB_USER', '.*' );|define( 'DB_USER', '$DB_USER' );|" \
   -e "s|^define( 'DB_PASSWORD', '.*' );|define( 'DB_PASSWORD', '$DB_PASS' );|" \
+  -e "s|^define( 'DB_HOST', '.*' );|define( 'DB_HOST', '$DB_HOST' );|" \
   /var/www/html/wordpress/wp-config.php
 msg_ok "Installed Wordpress"
 
